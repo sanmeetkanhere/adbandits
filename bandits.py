@@ -28,6 +28,7 @@ for _ in range(NUM_TRIALS):
     # now run the ad
     # binary here but we would use some kind of ad performance based reward
     # something like (daily rev - daily cost) if # impressions > k ?
+    # or converted vs not?
     if ground_truth_adperf[which_ad_to_try] > np.random.uniform():
         reward = 1
     else:
@@ -45,7 +46,7 @@ for _ in range(NUM_TRIALS):
         rest_of_ads = ((1 - ALPHA) * ads_prob) * mask2
         ads_prob = ad_won_vector + rest_of_ads
     else:
-        rest_of_ads = (BETA / (len(ground_truth_adperf) - 1) + (1 - BETA) * ads_prob) * mask2
+        rest_of_ads = (BETA / (AD_CONCURRENCY - 1) + (1 - BETA) * ads_prob) * mask2
         ad_lose_vector = ((1 - BETA) * ads_prob) * mask1
         ads_prob = ad_lose_vector + rest_of_ads
 
